@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
+import { Provider } from "react-redux";
+import createStore from "./store";
 
 import Themes from "./themes";
 import App from "./components/App";
@@ -9,15 +11,19 @@ import * as serviceWorker from "./serviceWorker";
 import { LayoutProvider } from "./context/LayoutContext";
 import { UserProvider } from "./context/UserContext";
 
+export const reduxStore = createStore();
+
 ReactDOM.render(
-  <LayoutProvider>
-    <UserProvider>
-      <ThemeProvider theme={Themes.default}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </UserProvider>
-  </LayoutProvider>,
+  <Provider store={reduxStore}>
+    <LayoutProvider>
+      <UserProvider>
+        <ThemeProvider theme={Themes.default}>
+          <CssBaseline/>
+          <App/>
+        </ThemeProvider>
+      </UserProvider>
+    </LayoutProvider>
+  </Provider>,
   document.getElementById("root"),
 );
 

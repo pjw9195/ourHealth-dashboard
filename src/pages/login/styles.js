@@ -12,7 +12,10 @@ export default makeStyles(theme => ({
     left: 0,
   },
   logotypeContainer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage : 'url("https://c.wallhere.com/photos/ef/26/fitness_model_running_women_sport-101538.jpg!d")',
     width: "60%",
     height: "100%",
     display: "flex",
