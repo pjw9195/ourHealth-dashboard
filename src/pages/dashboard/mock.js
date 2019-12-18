@@ -27,7 +27,7 @@ export default {
   ],
   bigStat: [
     {
-      product: "Light Blue",
+      product: "탄수화물",
       total: {
         monthly: 4232,
         weekly: 1465,
@@ -47,7 +47,7 @@ export default {
       }
     },
     {
-      product: "Sing App",
+      product: "단백질",
       total: {
         monthly: 754,
         weekly: 180,
@@ -67,7 +67,7 @@ export default {
       }
     },
     {
-      product: "RNS",
+      product: "지방",
       total: {
         monthly: 1025,
         weekly: 301,
