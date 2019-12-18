@@ -1,123 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
-
 // styles
 import useStyles from "./styles";
-
 // components
+import Table from "../dashboard/components/Table/Table";
 import PageTitle from "../../components/PageTitle";
 import Widget from "../../components/Widget";
-import { Typography } from "../../components/Wrappers";
+import { useDispatch, useSelector } from "react-redux";
+import * as dateActions from "../../actions/date";
 
+const dummy = [
+  {
+    id: 0,
+    name: "Mark Otto",
+    email: "ottoto@wxample.com",
+    product: "ON the Road",
+    price: "$25 224.2",
+    date: "11 May 2017",
+    city: "Otsego",
+    status: "Sent",
+  },
+  {
+    id: 1,
+    name: "Jacob Thornton",
+    email: "thornton@wxample.com",
+    product: "HP Core i7",
+    price: "$1 254.2",
+    date: "4 Jun 2017",
+    city: "Fivepointville",
+    status: "Sent",
+  },
+];
 export default function TypographyPage() {
   var classes = useStyles();
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(dateActions.getList());
+  }, []);
+  const data = useSelector(state => state.date);
+  console.log(data.dates.Items[0].date)
   return (
     <>
-      <PageTitle title="Typography" />
+      <PageTitle title="History"/>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <Widget title="Headings" disableWidgetMenu>
-            <div className={classes.dashedBorder}>
-              <Typography variant="h1" className={classes.text}>
-                h1. Heading
-              </Typography>
-              <Typography variant="h2" className={classes.text}>
-                h2. Heading
-              </Typography>
-              <Typography variant="h3" className={classes.text}>
-                h3. Heading
-              </Typography>
-              <Typography variant="h4" className={classes.text}>
-                h4. Heading
-              </Typography>
-              <Typography variant="h5" className={classes.text}>
-                h5. Heading
-              </Typography>
-              <Typography variant="h6">h6. Heading</Typography>
-            </div>
-          </Widget>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Widget title="Typography Colors" disableWidgetMenu>
-            <div className={classes.dashedBorder}>
-              <Typography variant="h1" color="primary" className={classes.text}>
-                h1. Heading
-              </Typography>
-              <Typography variant="h2" color="success" className={classes.text}>
-                h2. Heading
-              </Typography>
-              <Typography
-                variant="h3"
-                color="secondary"
-                className={classes.text}
-              >
-                h3. Heading
-              </Typography>
-              <Typography variant="h4" color="warning" className={classes.text}>
-                h4. Heading
-              </Typography>
-              <Typography
-                variant="h5"
-                color="primary"
-                colorBrightness="light"
-                className={classes.text}
-              >
-                h5. Heading
-              </Typography>
-              <Typography variant="h6" color="info">
-                h6. Heading
-              </Typography>
-            </div>
-          </Widget>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Widget title="Basic Text Settings" disableWidgetMenu>
-            <div className={classes.dashedBorder}>
-              <Typography className={classes.text}>Basic text</Typography>
-              <Typography className={classes.text} weight="light">
-                Basic light text
-              </Typography>
-              <Typography className={classes.text} weight="medium">
-                Basic medium text
-              </Typography>
-              <Typography className={classes.text} weight="bold">
-                Basic bold text
-              </Typography>
-              <Typography className={classes.text}>
-                BASIC UPPERCASE TEXT
-              </Typography>
-              <Typography className={classes.text}>
-                basic lowercase text
-              </Typography>
-              <Typography className={classes.text}>
-                Basic Capitalized Text
-              </Typography>
-              <Typography>
-                <i>Basic Cursive Text</i>
-              </Typography>
-            </div>
-          </Widget>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Widget title="Text Size" disableWidgetMenu>
-            <div className={classes.dashedBorder}>
-              <Typography className={classes.text} size="sm">
-                Heading Typography SM Font Size
-              </Typography>
-              <Typography className={classes.text}>
-                Heading Typography Regular Font Size
-              </Typography>
-              <Typography className={classes.text} size="md">
-                Heading Typography MD Font Size
-              </Typography>
-              <Typography className={classes.text} size="xl">
-                Heading Typography XL Font Size
-              </Typography>
-              <Typography className={classes.text} size="xxl">
-                Heading Typography XXL Font Size
-              </Typography>
-            </div>
+        <Grid item xs={12}>
+          <Widget title="Material-UI Table" upperTitle noBodyPadding>
+            <Table data={ data.dates.hasOwnProperty('Items') && data.dates.Items[0].date}/>
           </Widget>
         </Grid>
       </Grid>

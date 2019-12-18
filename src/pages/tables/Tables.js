@@ -11,7 +11,7 @@ import Table from "../dashboard/components/Table/Table";
 // data
 import mock from "../dashboard/mock";
 import Button from "@material-ui/core/Button";
-import * as boardActions  from "../../actions/board";
+import *as boardActions  from "../../actions/board";
 import { date_read } from "../../reducers/date";
 
 

@@ -12,6 +12,7 @@ export const getList = () => {
           "Accept": "application/json",
         }
       }).request(dispatch, state)
+      console.log(result)
       dispatch({type : DATE_READ, payload : result})
     }catch(err){
       console.log(err)

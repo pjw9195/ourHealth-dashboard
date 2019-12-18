@@ -1,29 +1,44 @@
-import React, { useState,useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
 import { ComposedChart, Line, ResponsiveContainer, XAxis, YAxis } from "recharts";
 // styles
 import useStyles from "./styles";
 // components
-import * as dateActions  from "../../actions/date";
+import * as dateActions from "../../actions/date";
 import mock from "./mock";
 import Widget from "../../components/Widget";
 import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function Dashboard(props) {
   let classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch()
-  const [data,setData] = useState([])
-  useEffect(()=>{
-    setData(dispatch(dateActions.getList()))
-  },[])
-  const mainChartData = data
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(dateActions.getList());
+  }, []);
+  const data = useSelector(state => state.date);
+  const dayNutrients = [];
+  for (let i = 0; i < 32; i++) {
+    dayNutrients[i] = { fat: 0, pro: 0, car: 0 };
+  }
+  if (data.dates.hasOwnProperty("Items")) {
+    console.log(data);
+    data.dates.Items[0].date.forEach((value) => {
+      const day = value.time.split("/")[2];
+      dayNutrients[parseInt(day.split(" ")[0])] =
+        { fat: dayNutrients[parseInt(day.split(" ")[0])].fat + parseInt(value.fat),
+          car: dayNutrients[parseInt(day.split(" ")[0])].car + parseInt(value.car),
+          pro: dayNutrients[parseInt(day.split(" ")[0])].pro + parseInt(value.pro),
+        };
+    });
+  }
+  const mainChartData = dayNutrients;
   console.log(mainChartData)
   const [mainChartState, setMainChartState] = useState("monthly");
   return (
@@ -72,7 +87,7 @@ export default function Dashboard(props) {
                 data={mainChartData}
               >
                 <YAxis
-                  ticks={[0, 100, 200,300]}
+                  ticks={[0, 100, 200, 300]}
                   tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
                   stroke={theme.palette.text.hint + "80"}
                   tickLine={false}
@@ -85,7 +100,7 @@ export default function Dashboard(props) {
                 />
                 <Line
                   type="natural"
-                  dataKey="cal"
+                  dataKey="car"
                   fill={theme.palette.background.light}
                   strokeWidth={2}
                   activeDot={false}
@@ -115,16 +130,7 @@ export default function Dashboard(props) {
             <BigStat {...stat} />
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Widget
-            title="Support Requests"
-            upperTitle
-            noBodyPadding
-            bodyClass={classes.tableWidget}
-          >
-            <Table data={mock.table}/>
-          </Widget>
-        </Grid>
+
       </Grid>
     </>
   );

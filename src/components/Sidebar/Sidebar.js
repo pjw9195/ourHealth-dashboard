@@ -33,17 +33,17 @@ const structure = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
   {
     id: 1,
-    label: "Ranking",
+    label: "History",
     link: "/app/typography",
     icon: <TypographyIcon />,
   },
   { id: 2, label: "Board", link: "/app/tables", icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
+  // {
+  //   id: 3,
+  //   label: "Notifications",
+  //   link: "/app/notifications",
+  //   icon: <NotificationsIcon />,
+  // },
   // {
   //   id: 4,
   //   label: "UI Elements",

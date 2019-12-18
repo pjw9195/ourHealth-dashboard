@@ -57,8 +57,8 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
   const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
   const signIn = (Username, Password, history) => {
     const poolData = {
-      UserPoolId: "ap-northeast-2_ir2pIGMiG", // your user pool id here
-      ClientId: "7elvhus2nqfkiq4imaplo1r365", // your app client id here
+      UserPoolId: process.env.REACT_APP_USER_POOL_ID, // your user pool id here
+      ClientId: process.env.REACT_APP_CLIENT_ID, // your app client id here
     };
     console.log(poolData)
 // Create the User Pool Object
