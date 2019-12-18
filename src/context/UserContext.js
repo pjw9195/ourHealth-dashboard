@@ -49,21 +49,60 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+
+async function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
+  // const [status,setStatus] = useState(false)
+  const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+  const signIn = (Username, Password, history) => {
+    const poolData = {
+      UserPoolId: "ap-northeast-2_ir2pIGMiG", // your user pool id here
+      ClientId: "7elvhus2nqfkiq4imaplo1r365", // your app client id here
+    };
+    console.log(poolData)
+// Create the User Pool Object
+    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    const userData = {
+      Username: Username, // your username here
+      Pool: userPool,
+    };
+    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    const authenticationData = {
+      Username, // your username here
+      Password,
+    };
+    const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
+      authenticationData,
+    );
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: function(result) {
+        localStorage.setItem("token", result);
+        localStorage.setItem("status", "true");
+        var accessToken = result.getAccessToken().getJwtToken();
+        /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer*/
+        var idToken = result.idToken.jwtToken;
+      },
+      onFailure: function(err) {
+        console.log(err);
+        localStorage.setItem("status", "false");
 
-  if (!!login && !!password) {
+      },
+    });
+  };
+  console.log(login,password)
+  signIn(login, password);
+  console.log('test')
+  if (localStorage.getItem("status")
+    === "true") {
     setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-
-      history.push('/app/dashboard')
+      setError(null);
+      setIsLoading(false);
+      dispatch({ type: "LOGIN_SUCCESS" });
+      history.push("/app/dashboard");
     }, 2000);
   } else {
-    dispatch({ type: "LOGIN_FAILURE" });
+    // dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
     setIsLoading(false);
   }
