@@ -60,7 +60,6 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
       UserPoolId: process.env.REACT_APP_USER_POOL_ID, // your user pool id here
       ClientId: process.env.REACT_APP_CLIENT_ID, // your app client id here
     };
-    console.log(poolData)
 // Create the User Pool Object
     const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     const userData = {
@@ -77,6 +76,7 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
     );
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function(result) {
+        console.log(result)
         localStorage.setItem("token", result);
         localStorage.setItem("status", "true");
         var accessToken = result.getAccessToken().getJwtToken();
