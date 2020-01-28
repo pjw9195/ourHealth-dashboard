@@ -9,3 +9,5 @@ pw: 6791135
 AWS - cognito, lambda, Api gateway, dynamoDB, route53, ec2, ecr  
 react, redux-thunk,  
 docker : docker-compose 를 이용한 배포
+
+https://ourhealths.kauboy.co.kr/
