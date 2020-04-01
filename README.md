@@ -3,7 +3,7 @@
 ### 1인 프로젝트
 
 id: jaksalko
-pw: 6791135
+pw: j04250201
 
 사용한 기술 :   
 AWS - cognito, lambda, Api gateway, dynamoDB, route53, ec2, ecr  
